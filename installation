@@ -1,0 +1,49 @@
+
+#Install openjdk-11 from yum package manager
+sudo yum install java-11-openjdk
+
+#check current version by using the below command
+java -version
+
+#check installed java versions by using the below command
+sudo alternatives --config java
+
+#set java home
+echo $JAVA_HOME
+export JAVA_HOME=/usr/lib/jvm/java-11-openjdk-11.0.3.7-0.el7_6.x86_64/
+echo $JAVA_HOME
+#check if the port is open
+sudo netstat -tpln
+
+https://linuxize.com/post/how-to-install-elasticsearch-on-centos-7/
+
+#To install elasticsearch, open your text editor and create the following repo file:
+
+sudo vi /etc/yum.repos.d/elasticsearch.repo
+#Paste the following content into the file
+[elasticsearch-6.x]
+name=Elasticsearch repository for 6.x packages
+baseurl=https://artifacts.elastic.co/packages/6.x/yum
+gpgcheck=1
+gpgkey=https://artifacts.elastic.co/GPG-KEY-elasticsearch
+enabled=1
+autorefresh=1
+type=rpm-md
+
+#Save the file and close your text editor.
+
+#You can now install the Elasticsearch package by typing:
+
+sudo yum install elasticsearch
+sudo service elasticsearch status
+sudo netstat -tpln
+#Once the installation process is complete enable and start the service by running:
+
+sudo systemctl enable elasticsearch.service && sudo systemctl start elasticsearch.service
+sudo netstat -tpln
+#You can check the elasticsearch status by pasting the following command
+curl -X GET "localhost:9200/"
+
+#If not running. open port in the firewall
+sudo firewall-cmd --zone=public --add-port=9200/tcp --permanent
+sudo firewall-cmd --reload
